@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Beer Tag</title>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/landingpage.css">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">BeerTag</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Project</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Sign Up <i class="fa fa-userDetails-plus"></i></a></li>
+        <li><a href="#">Login <i class="fa fa-userDetails"></i></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div id="content">
+				<h2>Java Team Project </h2>
+                <h5>This document describes a sample team project assignment for the Java cohort at Telerik
+                    Academy. Note: When you start working in this project you are not familiar with most of the technical
+                    requirements described in this document. We will discuss them step by step and you will build the
+                    application step by step as you become familiar with the new pieces in Module 3. </h5>
+                <h3>Project Description</h3>
+                <h5>Your task is to develop BEER TAG web application. BEER TAG enables your userDetails to manage all
+                    the beers that they have drank and want to drink. Each beer has detailed information about it from
+                    the ABV (alcohol by volume) to the style and description. Data is community driven and every beer
+                    lover can add new beers. Also, BEER TAG allows you to rate a beer and see average rating from
+                    different userDetails. You can refer to https://untappd.com/ as a real world example. </h5>
+				<h2>Functional Requirements</h2>
+                <h3>General</h3>
+                <h5>Each userDetails has name, email and profile picture.
+                    Each beer has name, description, origin country, brewery that produces it, style (pre-defined), ABV,
+                    zero, one or many tags (think Instagram hashtags) and a picture.
+                    Application provides functionality based on the role of the userDetails that is using it. There are three types
+                    of userDetails: anonymous, regular and administrator.
+                    Anonymous userDetails can browse all beers and their details. They can also filter by origin country, style,
+                    tags and sort by name, ABV and rating.
+                    Registered userDetails can create new beers, add a beer to their wish list and drunk list and rate beers.
+                    They can also edit and delete their own beers. Registered userDetails can modify their personal
+                    information as well.
+                    Administrators can edit/delete all beers, userDetails, breweries and styles.
+                    Note: The authentication and role management mechanism will be studied last thus you can’t
+                    implement it from the beginning. We will show you how to imitate authentication so that you can
+                    implement your functionality. </h5>
+                <h3>REST API </h3>
+                <h5>In order to collaborate with the QA team or provide other developers with your service, you need to
+                    develop a REST API. The REST API should leverage HTTP as a transport protocol and clear text
+                    JSON for the request and response payloads.
+                    API documentation is the information that is required to successfully consume and integrate with an
+                    API. Use Swagger to document yours.
+                    REST API Specification:
+                    1. Breweries
+                    a. CRUD Operations
+                    2. Styles
+                    a. CRUD Operations
+                    3. Beers
+                    a. CRUD Operations
+                    b. List all beers
+                    i. Filter by country, style, tags
+                    ii. Sort by name, ABV, rating
+                    c. Rate a beer
+                    4. Users
+                    a. CRUD Operations
+                    b. Add beer to wish list
+                    c. Get wish list beers
+                    d. Add beer to drank list
+                    e. Get drank list beers
+                    Note: All privacy rules apply for REST API endpoints. For example, anonymous userDetails cannot
+                    create/edit a beer or add it to his wish list. </h5>
+                <h3>Front-end </h3>
+                <h5>Public Part
+                    The public part of your application should be accessible without authentication. This includes the
+                    application start page, the userDetails login and userDetails registration forms, as well as list of all beers that have
+                    been added in the system. People that are not authenticated cannot see any userDetails specific details,
+                    they can only browse the beers and see details of them.
+                    Private Part (regular userDetails)
+                    Registered userDetails should have private part in the web application accessible after successful
+                    login. The web application provides them with UI to add/edit/delete (CRUD) beers. Each userDetails can rate a
+                    beer. Both userDetails rating and average rating should be visible for the userDetails. There should be masterdetails view that will show beer details when one is selected. It is your choice of design where and
+                    what properties to visualize, but all data should be visible somewhere.
+                    The app should have userDetails profile page that shows userDetails’s photo, details and their top 3 most ranked
+                    beers, they’ve tasted.
+                    Administration Part
+                    System administrators should have administrative access to the system and permissions to
+                    administer all entities e.g. to edit/delete (CRUD) userDetails and other administrators or edit/delete beers
+                    and related data if they decide to.
+                    Note: UI for managing countries, breweries, styles and tags is NOT required. </h5>
+                
+                
+				<h2>Technical Requirements</h2>
+                <h3>Database </h3>
+                <h5>The data of the application MUST be stored in a relational database – MySQL/MariaDB. You need
+                    to identify the core domain objects and model their relationships accordingly. </h5>
+                <h3>Backend </h3>
+                <h5> JDK version 11
+                     Use tiered project structure (separate the application components in layers)  Use SpringMVC and SpringBoot framework  Use Hibernate in the persistence (repository) layer  Use Spring Security to handle userDetails registration and userDetails roles  Service layer (i.e. “business” functionality) should have at least 80% unit test coverage</h5>
+                <h3>Frontend </h3>
+                <h5> Use Spring MVC Framework with Thymeleaf template engine for generating the UI  Use AJAX for making asynchronous requests to the server where you find it appropriate  You may change the standard theme and modify it to apply own web design and visual
+                    styles. For example you could search and use some free html & css template to make your
+                    web application look good.  You may use Bootstrap or Materialize
+                    Note: Please keep in mind that your web application should be build using Spring MVC Framework
+                    with Thymeleaf template engine. The REST API is only for external usage of your services</h5>
+                
+				<h2>Deliverables</h2>
+                <h5>Provide link to a Git repository with the following information:  Link to the Trello board
+                     Commits in the GitLab repository should give a good overview of how the project was
+                    developed, which features were created first etc. and the people who contributed.
+                    Contributions from all team members MUST be evident through the git commit history!  Read https://dev.to/pavlosisaris/git-commits-an-effective-style-guide-2kkn and
+                    https://chris.beams.io/posts/git-commit/ for a guide to write good commit messages
+                     The repository MUST contain the complete application source code and any run scripts  The project MUST have at least README.md documentation describing how to build and
+                    run the project  Screenshots of the major application userDetails facing screens with some data on them  URL of the application (if hosted online)</h5>
+                
+		
+				<hr>
+				<button class="btn btn-default btn-lg"><i class="fa fa-beer"></i> Get Started</button>
+                
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* 
+  button -> selects a HTML element
+  .action-container -> selects all classes with that name
+  #search-section -> selects the element with that id
+*/
+
+body{
+    background: #3aaf9f;
+    background: url(https://www.lifehacker.com.au/content/uploads/sites/4/2020/01/beer.jpg);
+    background-size: cover;
+    background-position: stretch;
+    font-family: Lato;
+    color: white;
+}
+
+#root {
+    padding-top: 10px;
+}
+
+#search-section {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    cursor: pointer;
+}
+
+#results .card img {
+    object-fit: cover;
+    object-position: center;
+
+    overflow: hidden;
+    max-height: 10rem;
+    transition: max-height 0.15s ease-out, z-index 1s linear;
+}
+
+#results .card img:hover {
+    max-height: 500px;
+    transition: max-height 0.25s ease-in, z-index 1s linear;
+}
+
+.card-title {
+    display: flex;
+    justify-content: center;
+    font-weight: 300;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.beer-attributes {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+}
+
+.beer-result > .beer-descr {
+    margin-top: 20px;
+}
+
+.beer-descr > span {
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: red;
+}

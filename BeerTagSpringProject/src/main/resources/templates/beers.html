@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All beers</title>
+    <style>
+        .table {
+            display: table;
+        }
+
+        .header {
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+            width: 10%;
+        }
+    </style>
+</head>
+<div th:if="${beers.isEmpty()}">
+    <h2 th:text="#{beers.emptyTitle}">No Beers</h2>
+</div>
+<div th:unless="${beers.isEmpty()}">
+    <h2 th:text="#{beers.title}">Beers</h2>
+    <div class="table">
+        <div class="header">
+            <div class="cell" th:text="#{beers.header.name}">Name</div>
+            <div class="cell" th:text="#{beers.header.abv}">ABV</div>
+            <div class="cell" th:text="#{beers.header.style}">Style</div>
+            <div class="cell" th:text="#{beers.header.brewery}">Brewery</div>
+            <div class="cell" th:text="#{beers.header.brewery}">Brewery</div>
+        </div>
+
+        <div class="row" th:each="beer: ${beers}">
+            <div class="cell" th:text="${beer.name}">Beer</div>
+            <div class="cell" th:text="${beer.abv}">4.5</div>
+            <div class="cell" th:text="${beer.style.name}">Style</div>
+            <div class="cell" th:text="${beer.brewery.getName()}">Brewery</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

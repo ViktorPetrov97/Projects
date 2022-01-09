@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Beertag</title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styleBeerProfil.css">
+    <link rel="stylesheet" href=css/buttonList.css>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers}">Search a beer</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers/new}">Create beer</a></li>
+                <li class="nav-item active">
+                    <a th:href="@{/profile}" sec:authorize="isAuthenticated()" class="nav-link">My Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/dranklist}" class="nav-link">Dranklist</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/wishlist}" class="nav-link">Wishlist</a></li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link js-scroll-trigger" th:href="@{/admin}">Admin portal</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/register_page}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link js-scroll-trigger" th:href="@{/login}">Login</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
+                          class="nav-link js-scroll-trigger">
+                        <input type="submit" value="Logout">
+                        <!--                            <a class="nav-link js-scroll-trigger" th:action="@{/logout}" sec:authorize="isAuthenticated()" href="/logout">Logout-->
+                        <!--                            </a>-->
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/beer.jpg');"
+         data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+                        class="ion-ios-arrow-forward"></i></a></span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section">
+    <div class="container-fluid">
+        <div class="row justify-content-center mb-4 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <h2 class="mb-4">Beer</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-header">
+                <div class="space space-4"></div>
+            </div>
+
+            <div class="card-body">
+                <div class="profile-user-info">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Name</div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${beer.name}"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Description</div>
+                        <div class="profile-info-value">
+                            <span th:text="${beer.description}"></span>
+                        </div>
+<!--                        <div class="profile-info-value">-->
+<!--                            <i class="fa fa-map-marker light-orange bigger-110"></i>-->
+<!--                            <span th:text="${beer.description}"></span>-->
+<!--                        </div>-->
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> ABV</div>
+
+                        <div class="profile-info-value">
+                            <i class="fa fa-map-marker light-orange bigger-110"></i>
+                            <span th:text="${beer.abv}"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Style</div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${beer.style.name}"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Brewery</div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${beer.brewery.name}"></span>
+                        </div>
+                    </div>
+
+<!--                    <div class="profile-info-row">-->
+<!--                        <div class="profile-info-name"> Picture</div>-->
+
+<!--&lt;!&ndash;                        <div class="profile-info-value">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span th:text="${beer.picture}"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                    </div>-->
+
+<!--                    <div class="row pt-3 pl-3">-->
+<!--                        <form id="ratingForm" th:action="@{/rating/__${rate}__/__${beer_id}__}" sec:authorize="isAuthenticated()" th:method="post">-->
+
+<!--                            <div class="rating">-->
+<!--                                <input onclick="document.getElementById('ratingForm').submit()" type="radio" id="star5"-->
+<!--                                       th:name="rating" value="5"/><label class="full" for="star5"-->
+<!--                                                                          title="Awesome - 5 stars"></label>-->
+<!--                                <input onclick="document.getElementById('ratingForm').submit()" type="radio" id="star4"-->
+<!--                                       th:name="rating" value="4"/><label class="full" for="star4"-->
+<!--                                                                          title="Pretty good - 4 stars"></label>-->
+<!--                                <input onclick="document.getElementById('ratingForm').submit()" type="radio" id="star3"-->
+<!--                                       th:name="rating" value="3"/><label class="full" for="star3"-->
+<!--                                                                          title="Meh - 3 stars"></label>-->
+<!--                                <input onclick="document.getElementById('ratingForm').submit()" type="radio" id="star2"-->
+<!--                                       th:name="rating" value="2"/><label class="full" for="star2"-->
+<!--                                                                          title="Kinda bad - 2 stars"></label>-->
+<!--                                <input onclick="document.getElementById('ratingForm').submit()" type="radio" id="star1"-->
+<!--                                       th:name="rating" value="1"/><label class="full" for="star1"-->
+<!--                                                                          title="Sucks big time - 1 star"></label>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+                </div>
+            </div>
+
+            <div class="space-20"></div>
+        </div>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light-buttonWishList">
+    <div class="container">
+        <div class="wrap-buttons-beer-profile" sec:authorize="isAuthenticated()">
+            <a th:href="@{/add/wishlist/{beer_id} (beer_id=${beer.getId()})}" class="color-button position-button">Add
+                to Wishlist</a>
+            <a th:href="@{/add/dranklist/{beer_id} (beer_id=${beer.getId()})}" class="color-button position-button">Add
+                to Dranklist</a>
+            <a th:href="@{/beers/{id}(id=${beer_id})}" class="color-button position-button">Edit beer</a>
+            <!--            <a href="#" class="color-button position-button">Rate beer</a>-->
+        </div>
+    </div>
+</nav>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/jquery.animateNumber.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/jquery.timepicker.min.js"></script>
+<script src="js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="js/google-map.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

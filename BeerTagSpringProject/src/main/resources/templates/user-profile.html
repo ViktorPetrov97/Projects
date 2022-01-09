@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers}">Search a beer</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/dranklist}" class="nav-link">Dranklist</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/wishlist}" class="nav-link">Wishlist</a></li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link js-scroll-trigger" th:href="@{/admin}">Admin portal</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/register_page}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link js-scroll-trigger" th:href="@{/login}">Login</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
+                          class="nav-link js-scroll-trigger">
+                        <input type="submit" value="Logout">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/beer.jpg');"
+         data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="/"> <i
+                        class="ion-ios-arrow-forward"></i></a></span>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+
+            <div class="card-header">
+                <span class="profile-picture">
+                    <img th:src="${user.picture}" alt="image" class="profile-picture">
+                </span>
+                <div class="space space-4"></div>
+            </div><!-- /.col -->
+
+            <div class="card-body">
+                <div class="profile-user-info">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Username: </div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${user.username}"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> First Name: </div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${user.firstName}"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Last Name: </div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${user.lastName}"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> E-mail: </div>
+
+                        <div class="profile-info-value">
+                            <span th:text="${user.email}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.col -->
+
+            <div class="space-20"></div>
+
+            <div class="card-footer" sec:authorize="isAuthenticated()">
+                <a th:href="@{/beers/new}" class="btn btn-primary p-3 px-xl-4 py-xl-3">Create A Beer</a>
+
+                <a th:href="@{/edit-user/{username}(username=${user.username})}" class="btn btn-primary p-3 px-xl-4 py-xl-3"
+                   id="child-right" >Edit Account</a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

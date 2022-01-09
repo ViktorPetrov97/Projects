@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Home</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" th:href="@{/images/favicon.ico}"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+<!--        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="/static/images/navbar-logo.svg" alt=""-->
+<!--                                                                        th:href="@{/images/navbar-logo.svg}"/></a>-->
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers}">Search a beer</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers/new}">Create beer</a></li>
+                <li class="nav-item active">
+                    <a th:href="@{/profile}" sec:authorize="isAuthenticated()" class="nav-link">My Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/dranklist}" class="nav-link">Dranklist</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/wishlist}" class="nav-link">Wishlist</a></li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link js-scroll-trigger" th:href="@{/admin}">Admin portal</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">Team</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/register_page}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link js-scroll-trigger" th:href="@{/login}">Login</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
+                          class="nav-link js-scroll-trigger">
+                        <input type="submit" value="Logout">
+                        <!--                            <a class="nav-link js-scroll-trigger" th:action="@{/logout}" sec:authorize="isAuthenticated()" href="/logout">Logout-->
+                        <!--                            </a>-->
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">BeerTag!</div>
+        <div class="masthead-heading text-uppercase">The Human-Beer Dating App</div>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
+    </div>
+</header>
+                <div class="row text-center" sec:authorize="hasAnyRole('USER')">
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-users fa-stack-2x text-primary"></i>
+                            <i class="fas fa-users fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">
+<!--                            User-->
+
+                            <p sec:authorize="isAuthenticated()">
+                                User:<span sec:authentication="name"/>
+                                <br/>
+                            </p>
+
+                        </h4>
+                        <p class="text-muted">
+
+
+
+                            "User Beer Quote"</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-beer fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">User Wish list</h4>
+                        <p class="text-muted">The actual user wish list</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-wine-bottle fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Drank List</h4>
+                        <p class="text-muted">The actual user drank list</p>
+                    </div>
+                </div>
+<!-- About-->
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">About</h2>
+            <h3 class="section-subheading text-muted">To beer or not to beer, that is the question.</h3>
+        </div>
+        <ul class="timeline">
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" alt=""
+                                                 th:src="@{/images/about/1.jpg}"/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>around 5,000 B.C.</h4>
+                        <h4 class="subheading">Once upon a time. . .</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Beer is the oldest recorded recipe in the world. The ancient Egyptians first documented the brewing process on papyrus scrolls around 5,000 B.C. Before the Egyptians, the primitive cultures of Mesopotamia are believed to have been the first brewers, though they didn’t bother to write anything down (this was around 10,000 B.C.!). All they left behind were malted barley scraps and bowls with beer like residue (and they called themselves brewers!). This residue was probably the remnants of a grain porridge that had fermented naturally with wild yeast, imparting an intoxicating effect to the consumer, who, therefore, repeated the process.</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt=""
+                                                 th:src="@{/images/about/2.jpg}"/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Around 1150</h4>
+                        <h4 class="subheading">German monks...</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">German monks began commonly using wild hops in beer and the ingredient quickly caught on. Brewers found that hops added a very pleasing, thirst quenching bitterness and, as an added benefit, the hops acted as a natural preservative extending the life of their beers.
+
+                        Monks were very much the preeminent brewers of the Middle Ages, with virtually every monastery having a brewery on site. Historians credit monks with many brewing innovations beyond the introduction of hops, including the idea of lagering, or cold storing, beer to improve flavor. </p></div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt=""
+                                                 th:src="@{/images/about/3.jpg}"/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>mid-1800s</h4>
+                        <h4 class="subheading"> As wave after wave...</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Immigrants came from Northern and Central Europe, bringing with them a taste for a new style of beer had taken hold on the Continent: Pilsner-style lagers typical of Germany and the Czech Republic. Very quickly, these pale, hoppy, clean tasting beers replaced the darker, heavier ales that had typified American beer in the previous centuries.</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt=""
+                                                 th:src="@{/images/about/4.jpg}"/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>1970’s and early 1980’s.</h4>
+                        <h4 class="subheading">Before Prohibition...</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Before Prohibition, there were over 2000 small breweries in the U.S.; by 1983, there were only a few hundred. In fact, the Tied House Law (a law that makes it illegal for breweries to sell their beverages on premise) was in effect until the late 1970’s. Since then, various legal exceptions have been passed. Now, almost all 50 states have permitted the regulated establishment of brewpubs. Today, there are over 2,000 brewpubs in the U.S. ,35 in New York State, and 2 in New York City.</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image">
+                    <h4>
+                        Be Part
+                        <br/>
+                        Of Our
+                        <br/>
+                        Story!
+                    </h4>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- Team-->
+<section class="page-section bg-light" id="team">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
+            <h3 class="section-subheading text-muted">"Life and beer are very similar. Chill for best results."</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="../static/images/team/1.jpg" alt=""
+                         th:src="@{/images/team/1.jpg}"/>
+                    <h4>Viktor Petrov</h4>
+                    <p class="text-muted">Java Developer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="team-member">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">“I am a firm believer in the people. If given the truth, they can be depended upon to meet any national crisis. The great point is to bring them the real facts, and beer.” ― Abraham Lincoln</p></div>
+        </div>
+    </div>
+</section>
+<!-- Clients-->
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 my-3">
+                <a href="#!"><img class="img-fluid d-block mx-auto" src="assets/img/logos/envato.jpg" alt=""
+                                  th:src="@{/images/logos/envato.jpg}"/></a>
+            </div>
+            <div class="col-md-3 col-sm-6 my-3">
+                <a href="#!"><img class="img-fluid d-block mx-auto" src="assets/img/logos/designmodo.jpg" alt=""
+                                  th:src="@{/images/logos/designmodo.jpg}"/></a>
+            </div>
+            <div class="col-md-3 col-sm-6 my-3">
+                <a href="#!"><img class="img-fluid d-block mx-auto" src="assets/img/logos/themeforest.jpg" alt=""
+                                  th:src="@{/images/logos/themeforest.jpg}"/></a>
+            </div>
+            <div class="col-md-3 col-sm-6 my-3">
+                <a href="#!"><img class="img-fluid d-block mx-auto" src="assets/img/logos/creative-market.jpg" alt=""
+                                  th:src="@{/images/logos/creative-market.jpg}"/></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer-->
+<footer class="footer py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4 text-lg-left">Copyright © Beer Tag 2022</div>
+            <div class="col-lg-4 my-3 my-lg-0">
+                <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Portfolio Modals-->
+<!-- Modal 1-->
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                                                               th:src="@{/images/close-icon.svg}"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here-->
+                            <h2 class="text-uppercase">Project Name</h2>
+                            <p class="item-intro text-muted">14 Lorem ipsum dolor sit amet consectetur.</p>
+                            <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/01-full.jpg" alt=""
+                                 th:src="@{/images/portfolio/01-full.jpg}"/>
+                            <p>15 Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                nostrum, reiciendis facere nemo!</p>
+                            <ul class="list-inline">
+                                <li>Date: January 2020</li>
+                                <li>Client: Threads</li>
+                                <li>Category: Illustration</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times mr-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 2-->
+<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                                                               th:src="@{/images/close-icon.svg}"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here-->
+                            <h2 class="text-uppercase">Project Name</h2>
+                            <p class="item-intro text-muted">16 Lorem ipsum dolor sit amet consectetur.</p>
+                            <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/02-full.jpg" alt=""
+                                 th:src="@{/images/portfolio/02-full.jpg}"/>
+                            <p>17 Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                nostrum, reiciendis facere nemo!</p>
+                            <ul class="list-inline">
+                                <li>Date: January 2020</li>
+                                <li>Client: Explore</li>
+                                <li>Category: Graphic Design</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times mr-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 3-->
+<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                                                               th:src="@{/images/close-icon.svg}"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here-->
+                            <h2 class="text-uppercase">Project Name</h2>
+                            <p class="item-intro text-muted">18 Lorem ipsum dolor sit amet consectetur.</p>
+                            <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/03-full.jpg" alt=""
+                                 th:src="@{/images/portfolio/03-full.jpg}"/>
+                            <p>19 Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                nostrum, reiciendis facere nemo!</p>
+                            <ul class="list-inline">
+                                <li>Date: January 2020</li>
+                                <li>Client: Finish</li>
+                                <li>Category: Identity</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times mr-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 4-->
+<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                                                               th:src="@{/images/close-icon.svg}"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here-->
+                            <h2 class="text-uppercase">Project Name</h2>
+                            <p class="item-intro text-muted">20 Lorem ipsum dolor sit amet consectetur.</p>
+                            <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/04-full.jpg" alt=""
+                                 th:src="@{/images/portfolio/04-full.jpg}"/>
+                            <p>21 Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                nostrum, reiciendis facere nemo!</p>
+                            <ul class="list-inline">
+                                <li>Date: January 2020</li>
+                                <li>Client: Lines</li>
+                                <li>Category: Branding</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times mr-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 5-->
+<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                                                               th:src="@{/images/close-icon.svg}"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here-->
+                            <h2 class="text-uppercase">Project Name</h2>
+                            <p class="item-intro text-muted">22Lorem ipsum dolor sit amet consectetur.</p>
+                            <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/05-full.jpg" alt=""
+                                 th:src="@{/images/portfolio/05-full.jpg}"/>
+                            <p>23Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                nostrum, reiciendis facere nemo!</p>
+                            <ul class="list-inline">
+                                <li>Date: January 2020</li>
+                                <li>Client: Southwest</li>
+                                <li>Category: Website Design</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times mr-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 6-->
+<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                                                               th:src="@{/images/close-icon.svg}"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here-->
+                            <h2 class="text-uppercase">Project Name</h2>
+                            <p class="item-intro text-muted">24 Lorem ipsum dolor sit amet consectetur.</p>
+                            <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/06-full.jpg" alt=""
+                                 th:src="@{/images/portfolio/06-full.jpg}"/>
+                            <p>25 Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                nostrum, reiciendis facere nemo!</p>
+                            <ul class="list-inline">
+                                <li>Date: January 2020</li>
+                                <li>Client: Window</li>
+                                <li>Category: Photography</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times mr-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="js/scripts.js"></script>
+
+</body>
+</html>

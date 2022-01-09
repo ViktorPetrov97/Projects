@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <style>
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center
+        }
+
+        .rating>input {
+            display: none
+        }
+
+        .rating>label {
+            position: relative;
+            width: 1em;
+            /*font-size: 6vw;*/
+            color: #FFD600;
+            cursor: pointer
+        }
+
+        .rating>label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 0
+        }
+
+        .rating>label:hover:before,
+        .rating>label:hover~label:before {
+            opacity: 1 !important
+        }
+
+        .rating>input:checked~label:before {
+            opacity: 1
+        }
+
+        .rating:hover>input:checked~label:before {
+            opacity: 0.4
+        }
+
+        body {
+            background: #222225;
+            color: white
+        }
+
+        h1,
+        p {
+            text-align: center
+        }
+
+        h1 {
+            margin-top: 150px
+        }
+
+        p {
+            font-size: 1.2rem
+        }
+
+        @media only screen and (max-width: 600px) {
+            h1 {
+                font-size: 14px
+            }
+
+            p {
+                font-size: 12px
+            }
+        }
+    </style>
+    <title>Welcome to BeerTag!</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link th:href="@{/css/our-style.css}" href="../static/css/our-style.css" rel="stylesheet"/>
+
+
+    <!---->
+
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!--    <title>Home</title>-->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" th:href="@{/images/favicon.ico}"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
+
+
+    <!---->
+    <div style="background-image: url('img_girl.jpg');">
+
+</head>
+
+
+<body id="root">
+
+<!---->
+
+<!-- Navigation-->
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars ml-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ml-auto">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/register_page}">Sign up</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link js-scroll-trigger"
+                                                                               th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
+                              class="nav-link js-scroll-trigger">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<div>
+    <div class="container">
+        <p>
+            <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-wine-bottle fa-stack-1x fa-inverse"></i>
+                        </span>
+        </p>
+
+        <form th:action="@{/beers}" th:object="${searchBeerDto}" method="post">
+            <div class="row">
+
+                <!-- Search input -->
+                <div class="input-group mb-3 col-sm-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Search:</span>
+                    </div>
+                    <input th:field="*{name}" type="text" class="form-control"
+                           placeholder="Enter name, brewery, country..."
+                           aria-describedby="basic-addon1">
+                </div>
+
+                <!-- Style Select -->
+                <div class="input-group mb-3 col-sm-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="style-select">Style</label>
+                    </div>
+                    <select th:field="*{styleId}" class="custom-select" id="style-select">
+                        <option selected value="-1">Any</option>
+                        <option th:each="style : ${styles}" th:value="${style.id}" th:text="${style.name}">Weiss
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3 col-sm-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="country-select">Country</label>
+                    </div>
+                    <select th:field="*{countryId}" class="custom-select" id="country-select">
+                        <option selected value="-1">Any</option>
+                        <option th:each="country : ${countries}" th:value="${country.id}" th:text="${country.name}">USA
+                    </select>
+                </div>
+
+                <!-- Search button  -->
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-warning">Search!</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<hr>
+
+<div id="results">
+
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+
+            <div th:each="beer : ${beers}">
+                <div class="col-auto mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <img th:src="${beer.picture}"
+                             class="beer-img card-img-top" alt="...">
+                        <div class="card-body">
+                            <h2 class="card-title" th:text="${beer.name}">Zagorka</h2>
+                            <p class="card-text">
+                            <h5 th:text="${beer.style.name}">Weiss</h5>
+                            <h5 th:text="${beer.abv} + '%'">10%</h5>
+                            <div class="text-center">
+                                <a th:href="@{/beers/beerProfile/__${beer.id}__}" class="btn btn-primary">View more</a>
+                            </div>
+                            <div class="btn-authorize" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a th:href="@{/beers/{id}(id=${beer.getId()})}" class="color-button position-button">Edit
+                                    beer</a>
+                                <br>
+                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/beers/{id}/delete(id=${beer.getId()})}"
+                                   class="color-button position-button" th:method="get">Delete beer</a>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+<script src="js/carousel.js"></script>
+<!--<script src="assets/mail/jqBootstrapValidation.js"></script>-->
+<!--<script src="assets/mail/contact_me.js"></script>-->
+
+
+</body>
+
+</html>

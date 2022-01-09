@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Wish list</title>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miss+Fajardose&display=swap" rel="stylesheet">
+    <!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
+
+
+    <link rel="stylesheet" href="static/css/open-iconic-bootstrap.min.css" th:href=" @{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" href="css/animate.css" th:href=" @{/css/animate.css}">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" href="css/magnific-popup.css" th:href="@{/css/magnific-popup.css}">
+
+    <link rel="stylesheet" href="css/aos.css" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" href="css/ionicons.min.css" th:href="@{/css/ionicons.min.css}">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" href="css/jquery.timepicker.css" th:href="@{/css/jquery.timepicker.css}">
+
+
+    <link rel="stylesheet" href="css/flaticon.css" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" href="css/icomoon.css" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers}">Search a beer</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers/new}">Create beer</a></li>
+                <li class="nav-item active">
+                    <a th:href="@{/profile}" sec:authorize="isAuthenticated()" class="nav-link">My Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/dranklist}" class="nav-link">Dranklist</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/wishlist}" class="nav-link">Wishlist</a></li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link js-scroll-trigger" th:href="@{/admin}">Admin portal</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/register_page}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link js-scroll-trigger" th:href="@{/login}">Login</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
+                          class="nav-link js-scroll-trigger">
+                        <input type="submit" value="Logout">
+                        <!--                            <a class="nav-link js-scroll-trigger" th:action="@{/logout}" sec:authorize="isAuthenticated()" href="/logout">Logout-->
+                        <!--                            </a>-->
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/beer.jpg');"
+         data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i
+                        class="ion-ios-arrow-forward"></i></a></span> <span>Menu <i
+                        class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container-fluid">
+        <div class="row justify-content-center mb-4 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <h2 class="mb-4">Your wishlist</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="row" th:each="beer: ${beers}">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light-removeWishListButton">
+        <div class="container">
+            <div class="wrap-buttons-wishlist-remove-beer" sec:authorize="isAuthenticated()">
+                <a th:href="@{/wishlist/remove/{beer_id} (beer_id=${beer.getId()})}" class="color-button-wishlist">Remove from list</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col-md-12 menu-wrap">
+        <div class="heading-menu text-center ftco-animate">
+        </div>
+        <div class="menus d-flex ftco-animate">
+<!--            <span>-->
+<!--                <img th:src="${beer.beerPicture}" alt="image" class="menu-img img">-->
+<!--            </span>-->
+            <div class="table">
+                <div class="text">
+                    <div class="d-flex">
+                        <div class="one-half p-1 col-sm-7">
+                            <h5>
+                                <a th:href="@{/getBeer/{id} (id=${beer.getId()})}">
+                                    <div class="cell p-1 col-sm-7" th:text="${beer.name}"></div>
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="one-forth abv col-xs-4">
+                            <div class="container-name">
+                                <div class="text">
+                                    <h8>ABV:</h8>
+                                </div>
+                                <div class="cell" th:text="${beer.abv}"></div>
+                            </div>
+
+                            <div class="container-name">
+                                <div class="text">
+                                    <h8>Style:</h8>
+                                </div>
+                                <div class="cell" th:text="${beer.style.name}"></div>
+                            </div>
+
+                            <div class="container-name">
+                                <div class="text">
+                                    <h8>Brewery:</h8>
+                                </div>
+                                <div class="cell" th:text="${beer.brewery.name}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/jquery.animateNumber.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/jquery.timepicker.min.js"></script>
+<script src="js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="js/google-map.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

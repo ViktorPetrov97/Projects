@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link th:href="@{/css/Registration.css}" rel="stylesheet" type="text/css" href="../static/Registration.css">
+<!--    <title>Login Form</title>-->
+
+
+
+    <title>Create a new beer!</title>
+</head>
+<style>
+    .error {
+        color: #ff0000;
+    }
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/beers}">Search a beer</a></li>
+                <li class="nav-item active">
+                    <a th:href="@{/profile}" sec:authorize="isAuthenticated()" class="nav-link">My Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/dranklist}" class="nav-link">Dranklist</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/wishlist}" class="nav-link">Wishlist</a></li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link js-scroll-trigger" th:href="@{/admin}">Admin portal</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/register_page}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link js-scroll-trigger" th:href="@{/login}">Login</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()"
+                          class="nav-link js-scroll-trigger">
+                        <input type="submit" value="Logout">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<form action="#" th:action="@{/beers/__${id != null ? id : 'new'}__}" th:object="${beerDto}" method="post">
+    <div class="container">
+        <label th:text="#{beers.header.name}">Beer</label>
+        <br/>
+        <input type="text" th:field="*{name}"/>
+        <label class="error" th:errors="*{name}"/>
+        <br/>
+
+        <label th:text="#{beers.header.abv}">ABV</label>
+        <br/>
+        <input type="text" th:field="*{abv}"/>
+        <br/><br/>
+
+        <label th:text="#{beers.header.style}">Style</label>
+        <br/>
+        <select th:field="*{styleId}">
+            <option th:each="style : ${styles}"
+                    th:value="${style.id}"
+                    th:text="${style.name}">BeerStyleOne
+            </option>
+        </select>
+        <br/><br/>
+        <label th:text="#{beers.header.brewery}">Brewery</label>
+        <select th:field="*{breweryId}">
+            <option th:each="brewery : ${breweries}"
+                    th:value="${brewery.id}"
+                    th:text="${brewery.name}">BeerBreweryOne
+            </option>
+        </select>
+        <br/><br/>
+        <div class="dropdown-text">Tag:</div>
+        <select th:field="*{tagId}">
+            <option th:each="tag: ${tags}"
+                    th:value="${tag.getId() }"
+                    th:text="${tag.getName()}">BeerTagOne
+            </option>
+        </select>
+        <br>
+        <label th:text="#{beers.header.picture}">Picture</label>
+        <br/>
+        <input type="url" th:field="*{picture}"/>
+        <br/>
+
+        <input type="submit" value="Save"/>
+    </div>
+</form>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+<script src="js/carousel.js"></script>
+</body>
+</html>

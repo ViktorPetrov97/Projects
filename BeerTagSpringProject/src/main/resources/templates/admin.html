@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css"/>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body sec:authorize="hasRole('ROLE_ADMIN')">
+<div class="well">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th style="width: 36px;"></th>
+        </tr>
+        </thead>
+        <tbody th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.id}">id</td>
+            <td th:text="${user.username}">Username</td>
+            <td th:text="${user.firstName}">First Name</td>
+            <td th:text="${user.lastName}">Last Name</td>
+            <td th:text="${user.email}">Email</td>
+
+<!--            <td>-->
+<!--                <form th:action="@{/admin/__${user.id}__/edit}">-->
+<!--                    <input type="submit" class="btn btn-outline-primary" value="Edit"/>-->
+<!--                </form>-->
+<!--            </td>-->
+            <td>
+                <form th:action="@{/admin/__${user.id}__/delete}" th:method="post">
+                    <input type="submit" class="btn btn-outline-primary" value="Delete"/>
+                </form>
+
+                <form th:action="@{/__${user.username}__/disable}" th:method="post">
+                    <input type="submit" class="btn btn-outline-primary" value="Disable"/>
+                </form>
+
+                <form th:action="@{/__${user.username}__/enable}" th:method="post">
+                    <input type="submit" class="btn btn-outline-primary" value="Enable"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<h3><a href="/">Home Page</a></h3>
+</body>
+</html>
